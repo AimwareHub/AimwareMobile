@@ -635,7 +635,82 @@ end)
 MainTab:AddButton({
 	Name = "AutoGuard",
 	Callback = function()
-      		OrionLib:MakeNotification({
+      		local plr = game.Players.LocalPlayer
+local rs = game:GetService("RunService")
+local shootingEvent = game:GetService("ReplicatedStorage").shootingEvent
+
+local tracking = false
+local player = nil
+local hasBall = false
+local ground = nil
+
+-- Helper function to find the nearest player with a basketball
+function updateNearestPlayerWithBall()
+    local dist = 9e9
+    for i,v in pairs(game.Players:GetPlayers()) do
+        if v.Name ~= plr.Name and v.Character and v.Character:FindFirstChild("Basketball") and not plr.Character:FindFirstChild("Basketball") and (plr.Character.Torso.Position - v.Character.Torso.Position).Magnitude < 50 then
+            local mag = (plr.Character.Torso.Position - v.Character.Torso.Position).Magnitude
+            if dist > mag then
+                dist = mag
+                player = v
+            end
+        end
+    end
+end
+
+function moveToPlayerBasketball()
+    if player and plr.Character and plr.Character:FindFirstChild("Humanoid") and not plr.Character:FindFirstChild("Basketball") and player.Character and player.Character:FindFirstChild("Basketball") then
+        plr.Character.Humanoid:MoveTo(player.Character.Basketball:FindFirstChildOfClass("Part").Position + player.Character.Torso.CFrame.LookVector + ((player.Character.Humanoid.MoveDirection * 2) + (plr.Character.Torso.Velocity.Unit * 3)))
+
+        if (player.Character.Torso.Position.Y - ground.Position.Y) > 2.5 then
+            plr.Character.Humanoid.Jump = true
+        end
+    end
+end
+
+function updateGroundPosition()
+    local part = workspace:FindPartOnRay(Ray.new(plr.Character.Torso.Position, Vector3.new(0, -100, 5)))
+    if part then
+        ground = part
+    end
+end
+
+function onStepped()
+    updateNearestPlayerWithBall()
+    updateGroundPosition()
+
+    if tracking then
+        moveToPlayerBasketball()
+    end
+end
+
+function began(key, gpe)
+    if not gpe and key.KeyCode == Enum.KeyCode.LeftControl then
+        if not tracking then
+            tracking = true
+        else
+            tracking = false
+        end
+    end
+end
+
+-- Connect events
+rs.Stepped:Connect(onStepped)
+game:GetService("UserInputService").InputBegan:Connect(began)
+
+
+local starterGui = game:GetService("StarterGui")
+
+starterGui:SetCore("SendNotification", {
+    Title = "Autoguard executed",
+    Text = "Toggle is Left Control.",
+    Duration = 5,
+    Button1 = "Okay",
+    Callback = function()
+        print("Okay button clicked!")
+    end
+})
+            OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Doesn't Support Mobile Users",
 	Image = "rbxassetid://4483345998",
@@ -648,7 +723,8 @@ MainTab:AddButton({
 MainTab:AddButton({
 	Name = "Silent Aim",
 	Callback = function()
-      		OrionLib:MakeNotification({
+      		loadstring(game:HttpGet('https://raw.githubusercontent.com/MainHackScripts/SilentAim/main/.lua'))()
+            OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Doesn't Support Mobile Users, use Aimbot",
 	Image = "rbxassetid://4483345998",
@@ -933,6 +1009,195 @@ MainTab:AddToggle({
             
             
 	end    
+})
+
+local AnimationTab = Window:MakeTab({
+	Name = "Animations",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = AnimationTab:AddSection({
+	Name = "Animations"
+})
+
+AnimationTab:AddButton({
+	Name = "Intros/Dunks",
+	Callback = function()
+      		local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("Aimware's Hoopz")
+
+
+local b = w:CreateFolder("Intros")
+
+
+b:Dropdown("Intro Animations",{"Intro_AnthonyShuffle_L","Intro_Backstand_U","Intro_BillieJean_C","Intro_Boo!_L","Intro_BringItOn_U","Intro_CaramellaDance_C","Intro_ChronoSteps_R","Intro_Clap_C","Intro_ComeOn_R","Intro_CleanGroove_C","Intro_Crabby_E","Intro_Cradles_L","Intro_CrissCross_R","Intro_CutePose_C","Intro_Dab2_U","Intro_Dab_C","Intro_Dirty_R","Intro_Default","Intro_DefaultDance_U","Intro_Distraction_E","Intro_ElectroShuffle_L","Intro_ElectroSwing_U","Intro_Dribble_R","Intro_FlapperDance_U","Intro_FrameSkin_R","Intro_Freestyle_R","Intro_GetDown_U","Intro_GoBanana_E","Intro_HandShuffle_R","Intro_Hate_C","Intro_Handstand_C","Intro_Headflips_E","Intro_Hiphop_L","Intro_Headless_C","Intro_JojoGang_E","Intro_JumpingJacks_R","Intro_Kickflip_E","Intro_LDance_U","Intro_Lavish_R","Intro_LeapingDance_C","Intro_LegShake_U","Intro_Levitate_L","Intro_MarioOdyssey_R","Intro_MickyJacky_E","Intro_Mood_L","Intro_NaeNae_L","Intro_OrangeJustice_L","Intro_NanaDance_C","Intro_Roasted_U","Intro_ScoutKick_C","Intro_Poop_E","Intro_PraiseTheLord_R","Intro_Reanimated_L","Intro_Shake&Clap_E","Intro_Separate_U","Intro_ShakeItUp_U","Intro_ShowOff_U","Intro_ShuffleV2_E","Intro_Shuffle_E","Intro_SideHustle_R","Intro_Sit&Sway_C","Intro_SlapDisrespect_U","Intro_Sit_C","Intro_Slick_E","Intro_Smeeze_E","Intro_Springy_R","Intro_SmugDance_U","Intro_Swipe_R","Intro_Thriller_R","Intro_TrashCompacter_U","Intro_Wave_C","Intro_WhipIt_E","Intro_Wiggle_C","Intro_Zany_R"},true,function(mob) --true/false, replaces the current title "Dropdown" with the option that t
+game:GetService("Players").LocalPlayer.Equipping.Intro.Value = mob
+end)
+
+
+
+
+local b = w:CreateFolder("Dunks")
+
+b:Dropdown("Dunk Animations",{"Dunk_1HClutchReverse_L","Dunk_2HWindmill_U","Dunk_360BTL_R","Dunk_360Scoop_E","Dunk_360MailMan_L","Dunk_360Pump_E","Dunk_360Windmill_Special","Dunk_360_R","Dunk_BTB2HReverse_E","Dunk_BTBScorpion_E","Dunk_BTB_U","Dunk_BTLReverse2H_Special","Dunk_BTLBTB_E","Dunk_Backscratcher_C","Dunk_BTL_R","Dunk_Cradle_E","Dunk_CuffCradle_E","Dunk_Default","Dunk_DoubleBTL_E","Dunk_FakeBTB_Special","Dunk_FakeBTL_Special","Dunk_FrontClutch_C","Dunk_Inverter_Special","Dunk_LostAndFound_Special","Dunk_MJ_L","Dunk_MailMan_U","Dunk_PumpReverse_R","Dunk_Pendulum_R","Dunk_Reverse2HWindmill_U","Dunk_Reverse360BTB2H_Special","Dunk_Reverse360BTL_E","Dunk_Reverse360BTB_E","Dunk_Scorpion2_R","Dunk_Reverse_C","Dunk_Scorpion_R","Dunk_Switcheroo_C","Dunk_UberTomahawk_U","Dunk_Tomahawk_C","Dunk_UnderTheLegs_R","Dunk_VinceCarter360_E","Dunk_Windmill_U"},true,function(mob) --true/false, replaces the current title "Dropdown" with the option that t
+    game:GetService("Players").LocalPlayer.Equipping.Dunk.Value = mob
+    game:GetService("Players").LocalPlayer.Equipping.Dunk2.Value = mob
+    game:GetService("Players").LocalPlayer.Equipping.Dunk3.Value = mob
+end)
+
+            OrionLib:MakeNotification({
+	Name = "Executed",
+	Content = "Intros/Dunks Animations",
+	Image = "rbxassetid://4483345998",
+	Time = 3
+})
+
+
+            
+  	end    
+})
+
+local ServersTab = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = ServersTab:AddSection({
+	Name = "Features"
+})
+
+ServersTab:AddButton({
+	Name = "Rejoin",
+	Callback = function()
+      		repeat
+wait()  
+until game:IsLoaded() 
+game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId,game.JobId) 
+  	end    
+})
+
+ServersTab:AddButton({
+	Name = "Server Hop",
+	Callback = function()
+      		local PlaceID = game.PlaceId
+        local AllIDs = {}
+        local foundAnything = ""
+        local actualHour = os.date("!*t").hour
+        local Deleted = false
+        local File = pcall(function()
+        AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+        end)
+        if not File then
+        table.insert(AllIDs, actualHour)
+        writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+        end
+        function TPReturner()
+        local Site;
+        if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+         end
+        local ID = ""
+        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+        end
+        local num = 0;
+        for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+                end
+            end
+        end
+        end
+
+        function Teleport()
+        while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+        end
+        end
+
+        Teleport()
+  	end    
+})
+
+
+local PlayerTab = Window:MakeTab({
+	Name = "Player",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = PlayerTab:AddSection({
+	Name = "Player Features"
+})
+
+PlayerTab:AddSlider({
+	Name = "Walk Speed",
+	Min = 16,
+	Max = 19,
+	Default = 16,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 0.1,
+	ValueName = "bananas",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+	end    
+})
+
+PlayerTab:AddSlider({
+	Name = "Jump Power",
+	Min = 50,
+	Max = 60,
+	Default = 50,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "bananas",
+	Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+	end    
+})
+
+
+PlayerTab:AddButton({
+	Name = "Reset",
+	Callback = function()
+      		game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
+  	end    
 })
 
 
