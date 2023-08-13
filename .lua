@@ -851,5 +851,89 @@ MainTab:AddToggle({
 	end    
 })
 
+MainTab:AddToggle({
+	Name = "Auto Dunk",
+	Default = false,
+	Callback = function(Value)
+		_G.autoDunk = (Value)
+
+        function getCourt()
+        local closestDistance = math.huge
+        local closestCourt = nil
+        for i,v in pairs(game:GetService("Workspace").Courts:GetDescendants()) do
+        if v.Name == "CourtFloor" then
+        local distance = (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+        if distance < closestDistance then
+            closestDistance = distance
+            closestCourt = v
+        end
+        end
+        end
+        return closestCourt.Parent.Parent.Parent
+        end
+
+
+        function getClosest()
+        local closestDistance = math.huge
+        local closestRim = nil
+        for i,v in pairs(game:GetService("Workspace").Courts:GetDescendants()) do
+        if v.Name == "hoop" then
+        local distance = (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position - v.Position).magnitude
+        if distance < closestDistance then
+            closestDistance = distance
+            closestRim = v
+        end
+        end
+        end
+        return closestRim
+        end
+
+
+
+        function returnDunkDistance()
+        local dunkDistance = (game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position - getClosest().Position).magnitude
+        return dunkDistance   
+        end
+
+        spawn(function()
+        while _G.autoDunk do
+        wait()
+        if returnDunkDistance() <= 28 then
+        local args = {
+        [1] = game:GetService("Players").LocalPlayer.Character:WaitForChild("Basketball")
+        }
+
+        getCourt().FieldGoal.dunkFunction:InvokeServer(unpack(args))
+        if _G.autoDunk == false then return end
+        end
+        end
+        end)
+
+
+                if (Value) == true then 
+                OrionLib:MakeNotification({
+	Name = "Aimware Mobile",
+	Content = "Auto Dunk Turned On",
+	Image = "rbxassetid://4483345998",
+	Time = 2
+})
+
+            end 
+
+
+            if (Value) == false then 
+                OrionLib:MakeNotification({
+	Name = "Aimware Mobile",
+	Content = "Auto Dunk Turned Off",
+	Image = "rbxassetid://4483345998",
+	Time = 2
+})
+
+            end 
+            
+            
+	end    
+})
+
 
 
