@@ -869,7 +869,7 @@ MainTab:AddSlider({
 	Default = 0,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
-	ValueName = "Mag Range",
+	ValueName = "bananas",
 	Callback = function(Value)
 		_G.magRange = Value
 	end    
@@ -1193,3 +1193,5 @@ PlayerTab:AddButton({
       		game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
   	end    
 })
+
+OrionLib:Init()
