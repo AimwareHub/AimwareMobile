@@ -30,7 +30,7 @@ MainTab:AddToggle({
 	Name = "Aimbot V2",
 	Default = false,
 	Callback = function(Value)
-		_G.silentAim = (Value) 
+		_G.silentAim = Value 
        spawn(function()
     local plr = game.Players.LocalPlayer
 local uis = game:GetService("UserInputService")
@@ -341,7 +341,7 @@ plr.Character.ChildRemoved:Connect(removed)
 plr.Character.Humanoid.Jumping:Connect(jumped)
        end)
 
-            if (Value) == false then 
+            if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Aimbot V2 Turned Off",
@@ -350,7 +350,7 @@ plr.Character.Humanoid.Jumping:Connect(jumped)
 })
             end 
 
-            if (Value) == true then 
+            if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Aimbot V2 Turned On",
@@ -366,7 +366,7 @@ MainTab:AddToggle({
 	Name = "Aimbot V1",
 	Default = false,
 	Callback = function(Value)
-		_G.aimToggle = (Value)
+		_G.aimToggle = Value
 spawn(function()
 if _G.aimToggle == false then
 game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("AimbotGui"):Destroy()
@@ -609,7 +609,7 @@ end
 end)
 end)
 
-        if (Value) == true then 
+        if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Aimbot V1 Turned On",
@@ -619,7 +619,7 @@ end)
 
             end 
 
-        if (Value) == false then 
+        if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Aimbot V1 Turned Off",
@@ -733,11 +733,11 @@ MainTab:AddButton({
   	end    
 })
 
-Tab:AddToggle({
+MainTab:AddToggle({
 	Name = "Reach",
 	Default = false,
 	Callback = function(Value)
-		_G.ReachPlayer = (Value) 
+		_G.ReachPlayer = Value 
 
         function getNearestPart(torso)
     local dist, part = 9e9
@@ -781,7 +781,7 @@ Tab:AddToggle({
         end)
 
 
-                if (Value) == false then 
+                if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Reach Turned Off",
@@ -792,7 +792,7 @@ Tab:AddToggle({
             end 
 
 
-            if (Value) == true then 
+            if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Reach Turned On",
@@ -811,7 +811,7 @@ MainTab:AddToggle({
 	Name = "Ball Mag",
 	Default = false,
 	Callback = function(Value)
-		_G.mag = (Value)
+		_G.mag = Value
         _G.magRange = 25
 function getClosestBasketball()
     local closestDistance = math.huge
@@ -842,7 +842,7 @@ end
 end
 end)
 
-            if (Value) == true then 
+            if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Ball Mag Turned On",
@@ -853,7 +853,7 @@ end)
             end 
             
 
-            if (Value) == false then 
+            if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Ball Mag Turned Off",
@@ -877,7 +877,7 @@ MainTab:AddSlider({
 	Increment = 1,
 	ValueName = "bananas",
 	Callback = function(Value)
-		_G.magRange = (Value)
+		_G.magRange = Value
 	end    
 })
 
@@ -893,17 +893,17 @@ MainTab:AddToggle({
 		local method = getnamecallmethod()
 
 		if tostring(self) == "shootingEvent" and method == "FireServer" and args[1] == "xd" then
-		    if (Value) == false then
+		    if Value == false then
 			args[1] = "xd"
 			return self.FireServer(self, unpack(args))
-		    elseif (Value) == true then
+		    elseif Value == true then
 		    return;
 			end
 		end
 		return namecall(self,...)
 	    end
 
-            if (Value) == false then 
+            if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Anti Travel Turned Off",
@@ -914,7 +914,7 @@ MainTab:AddToggle({
             end 
 
 
-            if (Value) == true then 
+            if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Anti Travel Turned On",
@@ -931,7 +931,7 @@ MainTab:AddToggle({
 	Name = "Auto Dunk",
 	Default = false,
 	Callback = function(Value)
-		_G.autoDunk = (Value)
+		_G.autoDunk = Value
 
         function getCourt()
         local closestDistance = math.huge
@@ -986,7 +986,7 @@ MainTab:AddToggle({
         end)
 
 
-                if (Value) == true then 
+                if Value == true then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Auto Dunk Turned On",
@@ -997,7 +997,7 @@ MainTab:AddToggle({
             end 
 
 
-            if (Value) == false then 
+            if Value == false then 
                 OrionLib:MakeNotification({
 	Name = "Aimware Mobile",
 	Content = "Auto Dunk Turned Off",
@@ -1175,7 +1175,7 @@ PlayerTab:AddSlider({
 	Increment = 0.1,
 	ValueName = "bananas",
 	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = Value
 	end    
 })
 
@@ -1188,7 +1188,7 @@ PlayerTab:AddSlider({
 	Increment = 1,
 	ValueName = "bananas",
 	Callback = function(Value)
-		game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
 	end    
 })
 
@@ -1199,6 +1199,3 @@ PlayerTab:AddButton({
       		game:GetService("Players").LocalPlayer.Character.Humanoid.Health = 0
   	end    
 })
-
-
-
