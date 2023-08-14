@@ -27,7 +27,7 @@ local Section = MainTab:AddSection({
 })
 
 MainTab:AddToggle({
-	Name = "Aimbot V2",
+	Name = "Silent Aim",
 	Default = false,
 	Callback = function(Value)
 		_G.silentAim = Value 
@@ -718,14 +718,7 @@ starterGui:SetCore("SendNotification", {
 })
 
   	end    
-})
-
-MainTab:AddButton({
-	Name = "Silent Aim",
-	Callback = function()
-      		loadstring(game:HttpGet('https://raw.githubusercontent.com/MainHackScripts/SilentAim/main/.lua'))()
-  	end    
-})
+}) 
 
 MainTab:AddToggle({
 	Name = "Reach",
